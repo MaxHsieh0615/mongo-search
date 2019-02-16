@@ -11,7 +11,7 @@ $(document).ready(function () {
     function initPage() {
         // Empty the story container, run an AJAX request for any unsaved headlines
         storyContainer.empty();
-        jQuery.get("/api/headlines?saved=false")
+        $.get("/api/headlines?saved=false")
             .then(function (data) {
                 // If we have headlines, render then to the page
                 if (data && data.length) {
