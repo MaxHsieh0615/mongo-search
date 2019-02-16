@@ -16,7 +16,7 @@ var router = express.Router();
 require("./config/routes")(router);
 
 // Make public a static folder
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/public/"));
 
 // Connect Handlebars to my Express app
 app.engine("handlebars", exhbrs({

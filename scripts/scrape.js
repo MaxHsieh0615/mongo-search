@@ -8,25 +8,32 @@ var axios = require("axios");
 
 var scrape = function (cb) {
     // First, we grab the body of the html with axios
-    axios.get("http://www.nba.com/news").then(function (response) {
+    axios.get("https://www.reddit.com/r/webdevelopment/").then(function (response) {
         // Then, we load that into cheerio and save it to $ for a shorthand selector
         var $ = cheerio.load(response.data);
 
         // Now, we grab every h2 within an article tag, and do the following:
-        $(".field-item").each(function (i, element) {
+        var result = [];
+        var resultObject = {
+            headline: "",
+            summary: ""
+        }
+        $(".kCqBrs").each(function (i, element) {
             // Save an empty result object
-            var result = [];
-
-            // Add the text and href of every link, and save them as properties of the result object
-            result.headline = $(this)
-                .children("h3")
+            var headlineData = $(this)
                 .text()
                 .trim();
-            result.summary = $(this)
-                .children("p")
-                .text()
-                .trim();
+            resultObject.headline = headlineData;
+            result.push(headlineData)
         });
+        $(".fHRkcP").each(function (i, element) {
+            var summaryData = $(this)
+                .text()
+                .trim();
+            resultObject.summary = summaryData;
+            result.push(summaryData)
+        });
+        console.log(result);
         cb(result);
     });
 };

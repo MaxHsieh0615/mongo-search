@@ -1,7 +1,7 @@
 $(document).ready(function () {
     // Setting a reference to the story-container div where all the dynamic content will go
     // Adding event listeeners to any dynamically generated "save stories"
-    // and "scrape new article" buttons
+    // and "scrape new story" buttons
     var storyContainer = $(".story-container");
     $(document).on("click", ".btn.save", handleStorySave);
     $(document).on("click", ".scrape-new", handleStoryScrape);
@@ -11,7 +11,7 @@ $(document).ready(function () {
     function initPage() {
         // Empty the story container, run an AJAX request for any unsaved headlines
         storyContainer.empty();
-        $.get("/api/headlines?saved=false")
+        jQuery.get("/api/headlines?saved=false")
             .then(function (data) {
                 // If we have headlines, render then to the page
                 if (data && data.length) {
@@ -24,10 +24,10 @@ $(document).ready(function () {
     }
     function renderStories(stories) {
         // This function handles appending HTML containing our story data to the page
-        // We are passed an array of JSON containing all available articles in our database
+        // We are passed an array of JSON containing all available storys in our database
         var storyPanels = [];
-        // We pass each article JSON object to the createPanel function which returns a bootstrap
-        // panel with our article data inside
+        // We pass each story JSON object to the createPanel function which returns a bootstrap
+        // panel with our story data inside
         for (var i = 0; i < stories.length; i++) {
             storyPanels.push(createPanel(stories[i]));
         }
@@ -44,7 +44,7 @@ $(document).ready(function () {
             $(["<div class='panel panel-default'>",
                 "<div class='panel-heading'>",
                 "<h3>",
-                article.headline,
+                story.headline,
                 "<a class='btn btn-success save'>",
                 "Save Story",
                 "</a>",
@@ -56,7 +56,7 @@ $(document).ready(function () {
                 "</div>"].join(""));
         // We attach the story's id to the jQuery element
         // We will use this when trying to figure out which story the user wants to save
-        panel.data("_id", article._id);
+        panel.data("_id", story._id);
         // We return the constructed panel jQuery element
         return panel;
     }
@@ -97,14 +97,14 @@ $(document).ready(function () {
             // If successful, mongoose will send back an object containing a key of "ok" with the value of 1
             // (which casts to 'true')
             if (data.ok) {
-                // Run the initPage function again. This will reload the entire list of articles
+                // Run the initPage function again. This will reload the entire list of storys
                 initPage();
             }
         });
     }
 
     function handleStoryScrape() {
-        // This function handles the user clicking any "scrape new article" buttons
+        // This function handles the user clicking any "scrape new story" buttons
         $.get("/api/fetch")
         .then(function(data){
             // If we are able to succesfully scrape the NBA and compare the stories to those
