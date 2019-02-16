@@ -71,4 +71,3 @@ module.exports = function(router) {
     });
 }
 
-// Since I have already set the engine to view handlebar in server.js, the app will know it needs to look at handlebars. Hence we do not need to include the .handlebars when we render the files.

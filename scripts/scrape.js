@@ -24,14 +24,14 @@ var scrape = function (cb) {
                 .text()
                 .trim();
             resultObject.headline = headlineData;
-            result.push(headlineData)
+            result.push(resultObject)
         });
-        $(".fHRkcP").each(function (i, element) {
+        $(".fDqoQf").each(function (i, element) {
             var summaryData = $(this)
                 .text()
                 .trim();
             resultObject.summary = summaryData;
-            result.push(summaryData)
+            result.push(resultObject)
         });
         console.log(result);
         cb(result);
